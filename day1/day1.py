@@ -19,4 +19,18 @@ def main():
             cal = 0;
     print(f'Part 1: Max is {max_cal}')
 
+    # Part 2 - Calculate sum of top three sets of numbers separated by an empty line
+    cal = 0
+    total_cal = []
+
+    for i in data:
+        if i != '':
+            cal += int(i)
+        else:
+            total_cal.append(cal)
+            cal = 0
+
+    total_cal.sort(reverse=True)
+    print(f'Sum of top three is {total_cal[0]+total_cal[1]+total_cal[2]}')
+
 main()
