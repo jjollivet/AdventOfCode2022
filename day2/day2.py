@@ -32,4 +32,35 @@ def main():
 
     print(f'Part 1: My number of points: {my_points} and the opponent has {opponent_points}')
 
+    # Part 2 - Count points for a rock paper scissors game
+    # where X = loss. Y = draw. Z = win
+    opponent_points = 0
+    my_points = 0
+
+    for i in data:
+        opponent_move = ord(i[0]) - ord('A') + 1
+        my_move = 0
+
+        outcome = i[2]
+
+        if outcome == 'X':
+            my_move = opponent_move - 1
+            if my_move == 0:
+                my_move = 3
+            opponent_points += win
+        elif outcome == 'Y':
+            my_move = opponent_move
+            opponent_points += tie
+            my_points += tie
+        else:
+            my_move = opponent_move + 1
+            if my_move == 4:
+                my_move = 1
+            my_points += win
+
+        my_points += my_move
+        opponent_points += opponent_move
+
+    print(f'Part 2: My number of points: {my_points} and the opponent has {opponent_points}')
+
 main()
