@@ -8,6 +8,7 @@ def main():
     data = list(filter(None, data))
 
     num_nested_sections = 0
+    num_common_sections = 0
 
     # Part 1 - Find thenumber of sections where a set is encompassed within another
     for sections in data:
@@ -16,7 +17,10 @@ def main():
 
         if (section[1] >= section[3] and section[0] <= section[2]) or (section[3] >= section[1] and section[2] <= section[0]):
             num_nested_sections += 1
+        if (section[1] >= section[2] and section[0] <= section[3]) or (section[3] >= section[0] and section[2] <= section[0]):
+            num_common_sections += 1
 
     print(f'Part 1: Number of nested sections: {num_nested_sections}')
+    print(f'Part 2: Number of common sections: {num_common_sections}')
 
 main()
