@@ -37,4 +37,21 @@ def main():
 
     print(f'Part 1 sum of indices: {int(sum_indices)}')
 
+    # Part 2 - Sort all inputs including two new ones
+    count = 1 # index starts at 1
+    # Find number of packets that are less than the first
+    for packet in range(len(data)):
+        if find_values(eval(data[packet]), [[2]]) > 0:
+            count += 1
+    decoder_key = count
+
+    # Find number of packets that are less than the second div packet
+    count = 2 # index starts at 1, but set to 2 to account for first div packet
+    for packet in range(len(data)):
+        if find_values(eval(data[packet]), [[6]]) > 0:
+            count += 1
+    decoder_key = decoder_key * count
+
+    print(f'Part 2 decoder key is {decoder_key}')
+
 main()
