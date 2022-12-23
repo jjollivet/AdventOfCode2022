@@ -8,11 +8,11 @@ class Monkey:
         self.if_true = if_true
         self.if_false = if_false
 
-    def inspect_and_throw(self, object):
+    def inspect_and_throw(self, object, common_modulo):
         self.num_inspections += 1
         old = object
         new = eval(self.operation)
-        new = new // 3
+        new = new % common_modulo
         if new % self.divisible_by == 0:
             return (self.if_true, new)
         else:
@@ -34,9 +34,10 @@ def main():
     data = list(filter(None, data))
 
     num_monkeys = int(len(data)/6)
-    num_rounds = 20
+    num_rounds = 10000
     list_of_items = []
     list_of_monkeys = []
+    common_modulo = 1
 
     for i in range(num_monkeys):
         # create list of worry items
@@ -51,17 +52,21 @@ def main():
         iffalse = re.findall('\d+', data[i*6+5])
         list_of_monkeys.append(Monkey(data[i*6+2][19:], int(div_by[0]), int(iftrue[0]), int(iffalse[0]),0))
 
-    # Part 1
+    # Part 2
+    # find common dividor
+    for monkey in range(len(list_of_monkeys)):
+        common_modulo *= list_of_monkeys[monkey].divisible_by
+
     for round in range(num_rounds):
         for monkey in range(num_monkeys):
             temp_list_of_items = list_of_items[monkey].copy()
             for item in temp_list_of_items:
                 # Each monkey evaluates, gets bored, and throws each item
-                throw_to, worry_level = list_of_monkeys[monkey].inspect_and_throw(item)
+                throw_to, worry_level = list_of_monkeys[monkey].inspect_and_throw(item, common_modulo)
                 list_of_items[monkey].pop(0)
                 list_of_items[throw_to].append(worry_level)
 
     # Retrieve all inspection numbers and find maximum two
-    print(f'Part 1 Monkey business is {calc_monkey_business(list_of_monkeys)}')
+    print(f'Part 2 Monkey business is {calc_monkey_business(list_of_monkeys)}')
 
 main()
