@@ -4,4 +4,4 @@ Feel free to check out my answers to the Advent of Code 2022 Challenge. I still 
 Store the .py and .txt files in a same folder, and call the script from your terminal of choice
 ```python
 python3 day1.py
-'''
+```
