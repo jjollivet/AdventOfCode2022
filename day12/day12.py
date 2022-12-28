@@ -1,7 +1,7 @@
 # The idea for building a list of all positions at once, rather than the
 # recursive function below, is taken from a solution by hyper-neutrino
 # This method helps to remove redundancies in travelling to previous unsuccessful paths
-def look_around(start_x, start_y):
+def look_around(start_x, start_y, part2):
     list_of_paths = [[start_x, start_y, 0]]
 
     while len(list_of_paths) != 0:
@@ -18,7 +18,12 @@ def look_around(start_x, start_y):
                 return step_count + 1
 
             travelled_grid.add(tuple([test_x, test_y]))
-            list_of_paths.append([test_x, test_y, step_count + 1])
+
+            # Don't increment the part 2 step count when we're at an elevation of 1
+            if not(part2 and data[test_x][test_y] <= 1):
+                list_of_paths.append([test_x, test_y, step_count + 1])
+            else:
+                list_of_paths.append([test_x, test_y, step_count])
 
 ## previous solution using recursion. However it is the least optimal solution possible
 ## Kept it here for documentation
@@ -76,4 +81,8 @@ for i, row in enumerate(rawdata):
         else:
             data[i].append(ord(val)-ord('a')+1)
 
-print(f'Part 1: {look_around(start_coord[0], start_coord[1])}')
+print(f'Part 1: {look_around(start_coord[0], start_coord[1], False)}')
+
+# Part 2 - reset list of visited coord
+travelled_grid = set()
+print(f'Part 2: {look_around(start_coord[0], start_coord[1], True)}')
