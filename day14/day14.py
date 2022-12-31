@@ -59,3 +59,41 @@ while not(bottom_reached):
             bottom_reached = True
 
 print(f'Part 1: Num of sand units is {num_sand_units}')
+
+# Part 2 - Simulate until point 500,0 is occupied
+# Re-initialise values
+sand_pile = set()
+num_sand_units = 0
+bottom_reached = False
+print(bottom)
+# Add infinite bottom wall where the base of the triangle is twice the height
+for i in range(500 - bottom - 3, 500 + bottom + 3):
+    walls.add(tuple([i,bottom+2]))
+
+# Iterate for each unit of sand
+while not(bottom_reached):
+    sand_unit = [500,0]
+    unit_deposited = False
+
+    # Iterate for each movement of each unit of sand
+    while not(unit_deposited):
+        occupied = sand_pile.union(walls)
+        # First check space directly under
+        if tuple([sand_unit[0], sand_unit[1] + 1]) not in occupied:
+            sand_unit[1] += 1
+        # Then check for space one under and one left
+        elif tuple([sand_unit[0] - 1, sand_unit[1] + 1]) not in occupied:
+            sand_unit[0] -= 1
+            sand_unit[1] += 1
+        # Then check for space one under and one right
+        elif tuple([sand_unit[0] + 1, sand_unit[1] + 1]) not in occupied:
+            sand_unit[0] += 1
+            sand_unit[1] += 1
+        else: # Otherwise the unit of sand settles
+            sand_pile.add(tuple(sand_unit))
+            unit_deposited = True
+            num_sand_units += 1
+            if sand_unit == [500,0]:
+                bottom_reached = True
+    
+print(f'Part 2: Num of sand units is {num_sand_units}')
